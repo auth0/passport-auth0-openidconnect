@@ -1,0 +1,10 @@
+extends user-layout
+
+block content
+  strong Your profile:
+  pre.profile=JSON.stringify(user,null,2)
+
+block script
+  script.
+    var user = !{JSON.stringify(user)};
+    console.log('user',user);

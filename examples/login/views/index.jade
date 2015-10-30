@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  
+  h3 Auth0 <strong>passport-auth0-oidc</strong> sample
+  br
+  button.btn.btn-primary(onclick="signin()") Login
+
+block script
+  script(src='https://cdn.auth0.com/js/lock-7.9.min.js')
+  script.
+    
+    function signin() {    
+      var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
+      lock.show({
+        callbackURL: '#{env.AUTH0_CALLBACK_URL}',
+        responseType: 'code',
+        authParams: {
+          scope: 'openid offline_access' //use 'offline_access' scope only if refresh-token is needed
+        }
+      });
+    }
