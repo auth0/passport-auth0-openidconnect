@@ -2,7 +2,7 @@
   "name": "passport-auth0-openidconnect",
   "version": "0.0.1",
   "description": "Auth0 platform authentication strategy for Passport.js based on OpenID Connect",
-  "main": "lib/index.js",
+  "main": "lib/passport-auth0-openidconnect/index.js",
   "scripts": {
     "test": "mocha"
   },
