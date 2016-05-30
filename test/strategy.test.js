@@ -4,7 +4,7 @@ var assert = require('assert');
 describe('constructor with bad params', function () {
 
   it('should fail if no domain is passed as option',function(){
-    (function(){ 
+    (function(){
       new Auth0OidcStrategy(
         {},
         function(accessToken, idToken, profile, done){}
@@ -13,7 +13,7 @@ describe('constructor with bad params', function () {
   });
 
   it('should fail if no clientID is passed as option',function(){
-    (function(){ 
+    (function(){
       new Auth0OidcStrategy(
         {domain:'foo'},
         function(accessToken, idToken, profile, done){}
@@ -31,7 +31,7 @@ describe('constructor with bad params', function () {
   });
 
   it('should fail if no callbackURL is passed as option',function(){
-    (function(){ 
+    (function(){
       new Auth0OidcStrategy(
         {domain:'foo',clientID:'bar',clientSecret:'baz'},
         function(accessToken, idToken, profile, done){}
@@ -40,47 +40,54 @@ describe('constructor with bad params', function () {
   });
 });
 
-describe('constructor with right params', function () {
-  var strategy;
+describe('constructor with right params and pre-configured endpoints', function () {
+  var strategy, configuration;
 
   before(function () {
     strategy = new Auth0OidcStrategy({
-       domain:       'jj.auth0.com', 
+       domain:       'jj.auth0.com',
        clientID:     'testid',
        clientSecret: 'testsecret',
-       callbackURL:  '/callback'
+       callbackURL:  '/callback',
+       authorizationURL: 'https://jj.auth0.com/authorize',
+       tokenURL:     'https://jj.auth0.com/oauth/token',
+       userInfoURL:  'https://jj.auth0.com/userinfo'
       },
       function(accessToken, idToken, profile, done) {}
     );
-  });
 
+    strategy._configurers.should.have.length(1);
+    strategy._configurers[0](null, function (err, config) {
+      configuration = config;
+    });
+  });
 
   it('should be named auth0-oidc',function(){
     strategy.name.should.eql('auth0-oidc');
   });
 
   it('oidc authorizationURL should be properly set', function () {
-    strategy._authorizationURL.should.eql('https://jj.auth0.com/authorize');
+    configuration.authorizationURL.should.eql('https://jj.auth0.com/authorize');
   });
   
   it('oidc tokenURL should be properly set', function () {
-    strategy._tokenURL.should.eql('https://jj.auth0.com/oauth/token');
+    configuration.tokenURL.should.eql('https://jj.auth0.com/oauth/token');
   });
   
   it('oidc userInfoURL should be properly set', function () {
-    strategy._userInfoURL.should.eql('https://jj.auth0.com/userinfo');
+    configuration.userInfoURL.should.eql('https://jj.auth0.com/userinfo');
   });
 
   it('oidc clienID should be properly set',function(){
-    strategy._clientID.should.eql('testid');
+    configuration.clientID.should.eql('testid');
   });
 
   it('oidc clientSecret should be properly set',function(){
-    strategy._clientSecret.should.eql('testsecret');
+    configuration.clientSecret.should.eql('testsecret');
   });
 
   it('oidc callbackURL should be properly set',function(){
-    strategy._callbackURL.should.eql('/callback');
+    configuration.callbackURL.should.eql('/callback');
   });
 
   it('oidc skipUserProfile should default to false',function(){
