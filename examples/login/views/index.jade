@@ -7,16 +7,19 @@ block content
   button.btn.btn-primary(onclick="signin()") Login
 
 block script
-  script(src='https://cdn.auth0.com/js/lock-9.min.js')
+  script(src='https://cdn.auth0.com/js/lock/11.0.0-beta.1/lock.min.js')
   script.
     
     function signin() {    
-      var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
-      lock.show({
-        callbackURL: '#{env.AUTH0_CALLBACK_URL}',
-        responseType: 'code',
-        authParams: {
-          scope: 'openid offline_access' //use 'offline_access' scope only if refresh-token is needed
+      var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}', {
+        auth: {
+          redirectUrl: '#{env.AUTH0_CALLBACK_URL}',
+          responseType: 'code',
+          params: {
+            scope: 'openid'
+          }
         }
       });
+
+      lock.show();
     }
