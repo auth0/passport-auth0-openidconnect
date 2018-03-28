@@ -22,7 +22,7 @@ describe('constructor with bad params', function () {
   });
 
   it('should fail if no clientSecret is passed as option',function(){
-    (function(){ 
+    (function(){
       new Auth0OidcStrategy(
         {domain:'foo',clientID:'bar'},
         function(accessToken, idToken, profile, done){}
@@ -43,22 +43,23 @@ describe('constructor with bad params', function () {
 describe('constructor with right params and pre-configured endpoints', function () {
   var strategy, configuration;
 
-  before(function () {
+  before(function(done) {
     strategy = new Auth0OidcStrategy({
-       domain:       'jj.auth0.com',
-       clientID:     'testid',
-       clientSecret: 'testsecret',
-       callbackURL:  '/callback',
-       authorizationURL: 'https://jj.auth0.com/authorize',
-       tokenURL:     'https://jj.auth0.com/oauth/token',
-       userInfoURL:  'https://jj.auth0.com/userinfo'
-      },
-      function(accessToken, idToken, profile, done) {}
-    );
+      domain:           'jj.auth0.com',
+      clientID:         'testid',
+      clientSecret:     'testsecret',
+      callbackURL:      '/callback',
+      authorizationURL: 'https://jj.auth0.com/authorize',
+      tokenURL:         'https://jj.auth0.com/oauth/token',
+      userInfoURL:      'https://jj.auth0.com/userinfo'
+    },
+    function(accessToken, idToken, profile, done) {});
 
-    strategy._configurers.should.have.length(1);
-    strategy._configurers[0](null, function (err, config) {
-      configuration = config;
+    strategy._setup(null, function(err, params) {
+      if (err) { return done(err); }
+      configuration = params;
+
+      done();
     });
   });
 
@@ -69,11 +70,11 @@ describe('constructor with right params and pre-configured endpoints', function 
   it('oidc authorizationURL should be properly set', function () {
     configuration.authorizationURL.should.eql('https://jj.auth0.com/authorize');
   });
-  
+
   it('oidc tokenURL should be properly set', function () {
     configuration.tokenURL.should.eql('https://jj.auth0.com/oauth/token');
   });
-  
+
   it('oidc userInfoURL should be properly set', function () {
     configuration.userInfoURL.should.eql('https://jj.auth0.com/userinfo');
   });
