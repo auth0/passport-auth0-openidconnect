@@ -17,7 +17,7 @@
     "should": "^7.1.1"
   },
   "dependencies": {
-    "passport-openidconnect": "https://github.com/siacomuzzi/passport-openidconnect/tarball/state_store",
+    "passport-openidconnect": "siacomuzzi/passport-openidconnect#9a68022d20915d2e1ae56b20132bfd8edfd8a4d4",
     "pkginfo": "^0.3.1",
     "request": "^2.65.0",
     "xtend": "^4.0.0"
