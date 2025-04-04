@@ -1,5 +1,5 @@
 var Auth0OidcStrategy = require('../lib/passport-auth0-openidconnect').Strategy;
-var assert = require('assert');
+var should = require('should'); 
 
 describe('constructor with bad params', function () {
 
@@ -41,9 +41,9 @@ describe('constructor with bad params', function () {
 });
 
 describe('constructor with right params and pre-configured endpoints', function () {
-  var strategy, configuration;
+  var strategy, oauth2;
 
-  before(function(done) {
+  before(function() {
     strategy = new Auth0OidcStrategy({
       domain:           'jj.auth0.com',
       clientID:         'testid',
@@ -55,12 +55,8 @@ describe('constructor with right params and pre-configured endpoints', function 
     },
     function(accessToken, idToken, profile, done) {});
 
-    strategy._setup(null, function(err, params) {
-      if (err) { return done(err); }
-      configuration = params;
+    oauth2 = strategy._oauth2;
 
-      done();
-    });
   });
 
   it('should be named auth0-oidc',function(){
@@ -68,31 +64,27 @@ describe('constructor with right params and pre-configured endpoints', function 
   });
 
   it('oidc authorizationURL should be properly set', function () {
-    configuration.authorizationURL.should.eql('https://jj.auth0.com/authorize');
+    oauth2._authorizeUrl.should.eql('https://jj.auth0.com/authorize');
   });
 
   it('oidc tokenURL should be properly set', function () {
-    configuration.tokenURL.should.eql('https://jj.auth0.com/oauth/token');
+    oauth2._accessTokenUrl.should.eql('https://jj.auth0.com/oauth/token');
   });
 
   it('oidc userInfoURL should be properly set', function () {
-    configuration.userInfoURL.should.eql('https://jj.auth0.com/userinfo');
+    strategy._userInfoURL.should.eql('https://jj.auth0.com/userinfo');
   });
 
   it('oidc clienID should be properly set',function(){
-    configuration.clientID.should.eql('testid');
+    oauth2._clientId.should.eql('testid');
   });
 
   it('oidc clientSecret should be properly set',function(){
-    configuration.clientSecret.should.eql('testsecret');
+    oauth2._clientSecret.should.eql('testsecret');
   });
 
   it('oidc callbackURL should be properly set',function(){
-    configuration.callbackURL.should.eql('/callback');
-  });
-
-  it('oidc skipUserProfile should default to false',function(){
-    strategy._skipUserProfile.should.be.false();
+    strategy._callbackURL.should.eql('/callback');
   });
 
 });

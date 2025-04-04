@@ -13,13 +13,12 @@
   "author": "auth0",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.x.x",
+    "mocha": "11.1.0",
     "should": "^7.1.1"
   },
   "dependencies": {
-    "passport-openidconnect": "0.0.2",
+    "passport-openidconnect": "0.1.2",
     "pkginfo": "^0.3.1",
-    "request": "^2.65.0",
     "xtend": "^4.0.0"
   }
 }

@@ -18,12 +18,13 @@ passport.use(new Strategy({
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: process.env.AUTH0_CALLBACK_URL
+    callbackURL: process.env.AUTH0_CALLBACK_URL,
+    passReqToCallback: false,
   },
-  function(issuer, audience, profile, cb) {
+  function(issuer, profile, context, cb) {
     //not interested in passport profile normalization, 
     //just the Auth0's original profile that is inside the _json field
-    return cb(null, profile._json);
+    return cb(null, profile);
   }));
 
 // configuration options for using all the callback arguments
