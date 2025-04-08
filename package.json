@@ -1,6 +1,6 @@
 {
   "name": "passport-auth0-openidconnect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Auth0 platform authentication strategy for Passport.js based on OpenID Connect",
   "main": "lib/passport-auth0-openidconnect/index.js",
   "scripts": {
@@ -13,13 +13,12 @@
   "author": "auth0",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.x.x",
+    "mocha": "11.1.0",
     "should": "^7.1.1"
   },
   "dependencies": {
-    "passport-openidconnect": "0.0.2",
+    "passport-openidconnect": "0.1.2",
     "pkginfo": "^0.3.1",
-    "request": "^2.65.0",
     "xtend": "^4.0.0"
   }
 }
