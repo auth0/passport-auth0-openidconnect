@@ -1,4 +1,4 @@
-# ⚠️ This library is deprecated and no longer maintained. ⚠️
+# ⚠️ This library is deprecated and no longer maintained.
 **Effective Date:** May 05, 2025
 
 This library will not receive further updates, including bug fixes or security patches. We strongly advise migrating to an alternative library for integrating your Node.js applications with Auth0.
