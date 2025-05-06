@@ -1,3 +1,14 @@
+# ⚠️ This library is deprecated and no longer maintained. ⚠️
+**Effective Date:** May 05, 2025
+
+This library will not receive further updates, including bug fixes or security patches. We strongly advise migrating to an alternative library for integrating your Node.js applications with Auth0.
+
+## Recommended Alternatives
+We recommend migrating your application to one of the following Auth0 libraries for Node.js:
+
+- [auth0/express-openid-connect](https://github.com/auth0/express-openid-connect)
+- [auth0/passport-auth0](https://github.com/auth0/passport-auth0)
+
 # Passport Auth0 OpenID Connect
 
 [Passport](https://github.com/jaredhanson/passport) strategy for authenticating
